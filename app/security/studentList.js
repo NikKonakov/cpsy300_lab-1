@@ -1,44 +1,52 @@
-"use client"
-import {useState, useEffect} from 'react'
-import Student from './student';
-import { getOneItemTest, getServerData, addNewDocument, addNewDocuments } from '../_utils/data';
-import Popup from 'reactjs-popup';
+"use client";
+import { useState, useEffect } from "react";
+import Student from "./student";
+import {
+  getOneItemTest,
+  getServerData,
+  addNewDocument,
+  addNewDocuments,
+} from "../_utils/data";
+import Popup from "reactjs-popup";
 
 export default function StudentList() {
+  const [students, setStudents] = useState([]);
+  const [updateCount, setUpdateCount] = useState(0);
+  const [editFirstName, setEditFirstName] = useState("");
+  const [editLastName, setEditLastName] = useState("");
+  const [editFieldOfStudies, setEditFieldOfStudies] = useState("");
+  const [editAge, setEditAge] = useState("");
+  function updateCoundHandler() {
+    setUpdateCount(updateCount + 1);
+  }
 
-    const [students, setStudents] = useState([]);
-    const [updateCount, setUpdateCount] = useState(0);
-    const [editFirstName, setEditFirstName] = useState("");
-    const [editLastName, setEditLastName] = useState("");
-    const [editFieldOfStudies, setEditFieldOfStudies] = useState("");
-    const [editAge, setEditAge] = useState("");
-    function updateCoundHandler(){
-      setUpdateCount(updateCount + 1);
+  useEffect(() => {
+    async function fetchData() {
+      let data = await getServerData("students");
+      setStudents(data.sort((a, b) => a.firstName.localeCompare(b.firstName)));
+
+      // let mockData = await fetch(
+      //   "https://6838b08c6561b8d882adf4d6.mockapi.io/students"
+      // );
+      // const mockDataJson = await mockData.json();
+      // mockDataJson.forEach((stud) => {
+      //   delete stud.id;
+      //   addNewDocument(stud, "students", true);
+      // });
     }
-   
-    useEffect(() => {
-      async function fetchData() {
-        let data = await getServerData("students");
-        setStudents(data.sort((a, b) => a.firstName.localeCompare(b.firstName)));
-
-        // let mockData = await fetch(
-        //   "https://6838b08c6561b8d882adf4d6.mockapi.io/students"
-        // );
-        // const mockDataJson = await mockData.json();
-        // mockDataJson.forEach((stud) => {
-        //   delete stud.id; 
-        //   addNewDocument(stud, "students", true);
-        // });
-      }
-      fetchData();
-    }, [updateCount]);
+    fetchData();
+  }, [updateCount]);
 
   return (
-    <div className='relative'>
+    <div className="relative">
       <h1 className="flex justify-center text-xl pt-2">List Of Students</h1>
       <Popup
         trigger={
-          <button className="bg-blue-500 text-white px-4 py-2 border rounded-2xl shadow-md absolute right-0 top-0 hover:bg-blue-900 hover:shadow-lg active:outline-none active:ring-2 active:ring-blue-300" nested modal> 
+          <button
+            className="bg-blue-500 text-white px-4 py-2 border rounded-2xl shadow-md absolute right-0 top-0 hover:bg-blue-900 hover:shadow-lg active:outline-none active:ring-2 active:ring-blue-300"
+            nested
+            modal
+          >
             Add New Student
           </button>
         }

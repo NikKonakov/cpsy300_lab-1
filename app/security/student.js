@@ -1,14 +1,21 @@
-import { updateDoc } from 'firebase/firestore';
-import React from 'react'
-import Popup from 'reactjs-popup'
-import "tailwindcss"
-import { updateDocument, deleteDocument } from '../_utils/data';
+import { updateDoc } from "firebase/firestore";
+import React from "react";
+import Popup from "reactjs-popup";
+import "tailwindcss";
+import { updateDocument, deleteDocument } from "../_utils/data";
 
-
-export default function Student({firstName, lastName, age, fieldOfStudies, id, pUpdateCount}) {
+export default function Student({
+  firstName,
+  lastName,
+  age,
+  fieldOfStudies,
+  id,
+  pUpdateCount,
+}) {
   const [editFirstName, setEditFirstName] = React.useState(firstName);
   const [editLastName, setEditLastName] = React.useState(lastName);
-  const [editFieldOfStudies, setEditFieldOfStudies] = React.useState(fieldOfStudies);
+  const [editFieldOfStudies, setEditFieldOfStudies] =
+    React.useState(fieldOfStudies);
   const [editAge, setEditAge] = React.useState(age);
 
   return (
@@ -145,4 +152,3 @@ export default function Student({firstName, lastName, age, fieldOfStudies, id, p
     </div>
   );
 }
-

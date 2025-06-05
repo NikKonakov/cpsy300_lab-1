@@ -1,27 +1,35 @@
-import { getFirestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  addDoc,
+  updateDoc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "./firebaseConfig";
-
-
 
 /**
  * This is a TEST function to get one item from the "students" collection.
  * It retrieves the document with ID "0" and logs its data.
  * @returns one item from the "students" collection
  */
-export async function getOneItemTest(){
-    const docRef = doc(db, "students", "0");
-    try {
-        const docSnap = await getDoc(docRef);
-        console.log("Document data:", docSnap.data());
-        if (docSnap.exists()) {
-            return { id: docSnap.id, ...docSnap.data() };
-        } else {
-            console.error("No such document!");
-            return null;
-        }
-    } catch (error) {
-        console.error("DATA_FETCH_DB: Error getting document.\n", error);
-    } 
+export async function getOneItemTest() {
+  const docRef = doc(db, "students", "0");
+  try {
+    const docSnap = await getDoc(docRef);
+    console.log("Document data:", docSnap.data());
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("DATA_FETCH_DB: Error getting document.\n", error);
+  }
 }
 
 export async function getServerData(collectionName, isTest = false) {
@@ -42,12 +50,11 @@ export async function getServerData(collectionName, isTest = false) {
 }
 
 export async function addNewDocument(object, collectionName, isTest = false) {
-    const docRef = await addDoc(collection(db, collectionName), object);
-    if (isTest) {
-        console.log("DATA_FETCH_DB: Document written with ID.\n", docRef.id);
-    }
+  const docRef = await addDoc(collection(db, collectionName), object);
+  if (isTest) {
+    console.log("DATA_FETCH_DB: Document written with ID.\n", docRef.id);
+  }
 }
-
 
 export async function updateDocument(objectId, updatedFields, isTest = false) {
   const docRef = doc(db, "students", objectId);
@@ -66,11 +73,14 @@ export async function updateDocument(objectId, updatedFields, isTest = false) {
   } catch (error) {
     console.error("DATA_FETCH_DB: Error updating document.\n", error);
   }
-  
 }
 
-
-export async function overwriteDocument(objectId, collection, newObject, isTest = false) {
+export async function overwriteDocument(
+  objectId,
+  collection,
+  newObject,
+  isTest = false
+) {
   const docRef = doc(db, collection, objectId);
   try {
     await setDoc(docRef, newObject);
