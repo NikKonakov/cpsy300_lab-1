@@ -46,7 +46,7 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
+# COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -59,7 +59,7 @@ COPY --from=builder /app/app/_utils ./_utils
 COPY --from=builder /app/app/page.js ./page.js
 COPY --from=builder /app/app/layout.js ./layout.js
 COPY --from=builder /app/app/globals.css ./globals.css
-
+COPY --from=builder /app/.env ./.env
 
 USER nextjs
 

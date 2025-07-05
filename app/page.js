@@ -1,5 +1,5 @@
 import React from "react";
-import StudentList from "./security/studentList";
+import StudentList from "./components/studentList";
 
 export default function Home() {
   return (

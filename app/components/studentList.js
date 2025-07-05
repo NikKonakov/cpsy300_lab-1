@@ -22,7 +22,7 @@ export default function StudentList() {
 
   useEffect(() => {
     async function fetchData() {
-      let data = await getServerData("students");
+      let data = await getServerData("students", true);
       setStudents(data.sort((a, b) => a.firstName.localeCompare(b.firstName)));
 
       // let mockData = await fetch(
@@ -44,8 +44,8 @@ export default function StudentList() {
         trigger={
           <button
             className="bg-blue-500 text-white px-4 py-2 border rounded-2xl shadow-md absolute right-0 top-0 hover:bg-blue-900 hover:shadow-lg active:outline-none active:ring-2 active:ring-blue-300"
-            nested
-            modal
+            nested='true'
+            modal='true'
           >
             Add New Student
           </button>
