@@ -53,12 +53,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-COPY --from=builder /app/app/security ./security
-COPY --from=builder /app/app/_utils ./_utils
-
-COPY --from=builder /app/app/page.js ./page.js
-COPY --from=builder /app/app/layout.js ./layout.js
-COPY --from=builder /app/app/globals.css ./globals.css
+COPY --from=builder /app/app/* ./app/
 COPY --from=builder /app/.env ./.env
 
 USER nextjs
