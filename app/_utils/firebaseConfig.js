@@ -5,9 +5,12 @@ import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
+/**
+ * Firebase configuration object containing links to .env for the necessary keys and identifiers.
+ * These keys are used to initialize the Firebase app and connect to the Firestore database and storage.
+ * Make sure to set these environment variables in your .env file.
+ */
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -18,13 +21,16 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+
 // Initialize Firestore and export the collection reference
 const studentsCollection = collection(db, "students");
+
 
 // Export the initialized app and db
 export { app, db, storage, studentsCollection };

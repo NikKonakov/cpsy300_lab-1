@@ -2,7 +2,7 @@ import { updateDoc } from "firebase/firestore";
 import React from "react";
 import Popup from "reactjs-popup";
 import "tailwindcss";
-import { updateDocument, deleteDocument } from "../_utils/data";
+import { updateStudentDocument, deleteDocument } from "../_utils/data";
 
 export default function Student({
   firstName,
@@ -88,7 +88,7 @@ export default function Student({
                 <button
                   className="bg-green-500 text-black hover:text-white font-mono px-4 py-2 border border-green-600 rounded-2xl shadow-sm hover:bg-green-900 hover:shadow-lg active:outline-none active:ring-2 active:ring-green-300"
                   onClick={() => {
-                    updateDocument(id, {
+                    updateStudentDocument(id, {
                       firstName: editFirstName,
                       lastName: editLastName,
                       age: editAge,

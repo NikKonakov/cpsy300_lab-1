@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Student from "./student";
 import {
   getOneItemTest,
-  getServerData,
+  fetchCollectionData,
   addNewDocument,
   addNewDocuments,
 } from "../_utils/data";
@@ -22,7 +22,7 @@ export default function StudentList() {
 
   useEffect(() => {
     async function fetchData() {
-      let data = await getServerData("students", true);
+      let data = await fetchCollectionData("students", true);
       setStudents(data.sort((a, b) => a.firstName.localeCompare(b.firstName)));
 
       // let mockData = await fetch(
