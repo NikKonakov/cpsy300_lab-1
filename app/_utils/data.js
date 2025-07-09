@@ -8,6 +8,9 @@ import {
   updateDoc,
   setDoc,
   deleteDoc,
+  query,
+  where,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 
@@ -35,6 +38,22 @@ export async function getOneItemTest() {
 }
 
 
+export async function getDocumentById(pCollectionName, pId) {
+  const docRef = doc(db, pCollectionName, pId);
+	try {
+		const docSnap = await getDoc(docRef);
+		if (docSnap.exists()) {
+			return { id: docSnap.id, ...docSnap.data() };
+		} else {
+			console.error('No such document!');
+			return null;
+		}
+	} catch (error) {
+		console.error('DATA_FETCH_DB: Error getting document.\n', error);
+	}
+}
+
+
 /**
  * This method fetches all documents from a specified collection in the Firestore database.
  * It retrieves all documents from the collection, formats them into an array of objects,
@@ -57,6 +76,21 @@ export async function fetchCollectionData(collectionName, isTest = false) {
       data
     );
   }
+  return data;
+}
+
+
+export async function fetchCollectionDataWithQuery(pCollectionName, pQuery, pIsTest = false) {
+  //...query - parses all the array's elements as arguments to the where() function 
+  const q = query(collection(db, pCollectionName), where(...pQuery));
+  const querySnapshot = await getDocs(q);
+  let data = [];
+	querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+    if (pIsTest) {
+      console.log("DATA_FETCH_DB: Data fetched from collection with query:", pCollectionName, "\n", doc.id, " => ", doc.data());
+    }
+	});
   return data;
 }
 
@@ -127,7 +161,7 @@ export async function updateDocument(
   updatedFields,
   isTest = false
 ) {
-  const docRef = doc(db, collection, objectId);
+  const docRef = doc(db, collection, objectId, updatedFields);
   try {
     await updateDoc(docRef, updatedFields);
     if (isTest) {
